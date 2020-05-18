@@ -104,7 +104,7 @@ class Vislice:
         return nov_id
 
     def ugibaj(self, id_igre, crka):
-        trenutna_igra = self.igre[id_igre]
+        trenutna_igra,_ = self.igre[id_igre]
         novo_stanje = trenutna_igra.ugibaj(crka)
         self.igre[id_igre] = (trenutna_igra, novo_stanje)
 
