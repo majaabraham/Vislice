@@ -2,6 +2,8 @@ import random
 
 STEVILO_DOVOLJENIH_NAPAK = 10
 
+ZACETEK = 'Z'
+
 # Konstante za rezultate ugibanj
 PRAVILNA_CRKA = '+' 
 PONOVLJENA_CRKA = 'o'
@@ -78,5 +80,32 @@ class Igra:
                 return PORAZ
             else:
                 return NAPACNA_CRKA
+
+class Vislice:
+    """
+    Skrbi za trenutno stanje več iger (imel bo več objektov tipa Igra)
+    """
+    def __init__(self):
+        # Slovar, ki ID-ju priredi objekt njegove igre
+        self.igre = {}  # int -> (Igra, stanje)
+
+    def prosti_ID_igre(self):
+        """Vrne nek id, ki ga ne uporablja nobena igra"""
+
+        if len(self.igre) == 0:
+            return 0
+        else:
+            return max(self.igre.keys()) + 1
+    
+    def nova_igra(self):
+        nov_id = self.prosti_ID_igre()
+        sveza_igra = nova_igra()
+        self.igre[nov_id] = (sveza_igra, ZACETEK)
+        return nov_id
+
+    def ugibaj(self, id_igre, crka):
+        trenutna_igra = self.igre[id_igre]
+        novo_stanje = trenutna_igra.ugibaj(crka)
+        self.igre[id_igre] = (trenutna_igra, novo_stanje)
 
 
